@@ -8,6 +8,12 @@ yarn-error.log
 .env.local
 .env.*.local
 
+# Terraform
+terraform/.terraform/
+*.tfstate
+*.tfstate.*
+.crash.log
+
 # IDE
 .vscode/
 .idea/
