@@ -11,7 +11,7 @@ resource "aws_security_group" "insecure_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]   # ❌ intentional vulnerability
+    cidr_blocks = ["0.0.0.0/16"]   # ❌ intentional vulnerability -> now Corrected ✔️
   }
 
   ingress {
@@ -23,17 +23,25 @@ resource "aws_security_group" "insecure_sg" {
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 resource "aws_instance" "node_app" {
-  ami                    = "ami-0f5ee92e2d63afc18" # Amazon Linux 2 (ap-south-1)
+  ami                    = "ami-0f5ee92e2d63afc18"
   instance_type          = var.instance_type
-  vpc_security_group_ids = [aws_security_group.insecure_sg.id]
+  vpc_security_group_ids = [aws_security_group.secure_sg.id]
+
+  metadata_options {
+    http_tokens = "required"
+  }
+
+  root_block_device {
+    encrypted = true
+  }
 
   tags = {
     Name = "NodeApp-DevSecOps"
