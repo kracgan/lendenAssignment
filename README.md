@@ -225,7 +225,7 @@ to fix all critical security issues using best practices.
 ```
 ---
 
-## Video Demonstration (To Be Added)
+## Video Demonstration
 
 A **5–10 minute screen recording** demonstrating:
 - Jenkins pipeline execution
@@ -234,7 +234,7 @@ A **5–10 minute screen recording** demonstrating:
 - Terraform deployment
 - Application access via public IP
 
-**Video Link:** _Add here_
+**Video Link:** https://drive.google.com/file/d/1oCIWYjBrKaNMsrPEeGfNSAU_f0OygVHm/view?usp=sharing
 
 ---
 
