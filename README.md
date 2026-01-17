@@ -183,7 +183,7 @@ to fix all critical security issues using best practices.
 ---
 
 ## Repository Structure
-
+```
 ├── app/
 │ └── Node.js application
 ├── Dockerfile
@@ -194,6 +194,7 @@ to fix all critical security issues using best practices.
 │ ├── variables.tf
 │ └── outputs.tf
 ├── README.md
+```
 ---
 
 ## Video Demonstration (To Be Added)
