@@ -1,0 +1,170 @@
+Started by user Sumeet Dayanand Shah
+Obtained jenkins/Jenkinsfile from git https://github.com/kracgan/lendenAssignment.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/terraform-devsecops-pipeline
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/terraform-devsecops-pipeline/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/kracgan/lendenAssignment.git # timeout=10
+Fetching upstream changes from https://github.com/kracgan/lendenAssignment.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/kracgan/lendenAssignment.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 62e9f474a9edc4c8d9cc22681101b0f6b8f3b5a9 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 62e9f474a9edc4c8d9cc22681101b0f6b8f3b5a9 # timeout=10
+Commit message: "chore: skip terraform plan stage due to missing terraform in jenkins"
+ > git rev-list --no-walk 7c1532abdcb7d6083bb0d7296a97f2205daa76f5 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/terraform-devsecops-pipeline/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/kracgan/lendenAssignment.git # timeout=10
+Fetching upstream changes from https://github.com/kracgan/lendenAssignment.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/kracgan/lendenAssignment.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 62e9f474a9edc4c8d9cc22681101b0f6b8f3b5a9 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 62e9f474a9edc4c8d9cc22681101b0f6b8f3b5a9 # timeout=10
+Commit message: "chore: skip terraform plan stage due to missing terraform in jenkins"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Terraform Security Scan)
+[Pipeline] sh
++ trivy config --severity HIGH,CRITICAL terraform/
+2026-01-17T11:24:45Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-01-17T11:24:46Z	INFO	[terraform scanner] Scanning root module	file_path="."
+2026-01-17T11:24:46Z	INFO	Detected config files	num=2
+
+Report Summary
+
+┌─────────┬───────────┬───────────────────┐
+│ Target  │   Type    │ Misconfigurations │
+├─────────┼───────────┼───────────────────┤
+│ .       │ terraform │         0         │
+├─────────┼───────────┼───────────────────┤
+│ main.tf │ terraform │         4         │
+└─────────┴───────────┴───────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+main.tf (terraform)
+===================
+Tests: 4 (SUCCESSES: 0, FAILURES: 4)
+Failures: 4 (HIGH: 3, CRITICAL: 1)
+
+AVD-AWS-0028 (HIGH): Instance does not require IMDS access to require a token.
+════════════════════════════════════════
+IMDS v2 (Instance Metadata Service) introduced session authentication tokens which improve security when talking to IMDS.
+
+By default <code>aws_instance</code> resource sets IMDS session auth tokens to be optional.
+
+To fully protect IMDS you need to enable session tokens by using <code>metadata_options</code> block and its <code>http_tokens</code> variable set to <code>required</code>.
+
+
+See https://avd.aquasec.com/misconfig/avd-aws-0028
+────────────────────────────────────────
+ main.tf:33-41
+────────────────────────────────────────
+  33 ┌ resource "aws_instance" "node_app" {
+  34 │   ami                    = "ami-0f5ee92e2d63afc18" # Amazon Linux 2 (ap-south-1)
+  35 │   instance_type          = var.instance_type
+  36 │   vpc_security_group_ids = [aws_security_group.insecure_sg.id]
+  37 │ 
+  38 │   tags = {
+  39 │     Name = "NodeApp-DevSecOps"
+  40 │   }
+  41 └ }
+────────────────────────────────────────
+
+
+AVD-AWS-0104 (CRITICAL): Security group rule allows unrestricted egress to any IP address.
+════════════════════════════════════════
+Opening up ports to connect out to the public internet is generally to be avoided. You should restrict access to IP addresses or ranges that are explicitly required where possible.
+
+
+See https://avd.aquasec.com/misconfig/aws-vpc-no-public-egress-sgr
+────────────────────────────────────────
+ main.tf:29
+   via main.tf:25-30 (egress)
+    via main.tf:5-31 (aws_security_group.insecure_sg)
+────────────────────────────────────────
+   5   resource "aws_security_group" "insecure_sg" {
+   .   
+  29 [     cidr_blocks = ["0.0.0.0/0"]
+  ..   
+  31   }
+────────────────────────────────────────
+
+
+AVD-AWS-0107 (HIGH): Security group rule allows unrestricted ingress from any IP address.
+════════════════════════════════════════
+Security groups provide stateful filtering of ingress and egress network traffic to AWS
+resources. It is recommended that no security group allows unrestricted ingress access to
+remote server administration ports, such as SSH to port 22 and RDP to port 3389.
+
+
+See https://avd.aquasec.com/misconfig/avd-aws-0107
+────────────────────────────────────────
+ main.tf:14
+   via main.tf:9-15 (ingress)
+    via main.tf:5-31 (aws_security_group.insecure_sg)
+────────────────────────────────────────
+   5   resource "aws_security_group" "insecure_sg" {
+   .   
+  14 [     cidr_blocks = ["0.0.0.0/0"]   # ❌ intentional vulnerability
+  ..   
+  31   }
+────────────────────────────────────────
+
+
+AVD-AWS-0131 (HIGH): Root block device is not encrypted.
+════════════════════════════════════════
+Block devices should be encrypted to ensure sensitive data is held securely at rest.
+
+
+See https://avd.aquasec.com/misconfig/avd-aws-0131
+────────────────────────────────────────
+ main.tf:33-41
+────────────────────────────────────────
+  33 ┌ resource "aws_instance" "node_app" {
+  34 │   ami                    = "ami-0f5ee92e2d63afc18" # Amazon Linux 2 (ap-south-1)
+  35 │   instance_type          = var.instance_type
+  36 │   vpc_security_group_ids = [aws_security_group.insecure_sg.id]
+  37 │ 
+  38 │   tags = {
+  39 │     Name = "NodeApp-DevSecOps"
+  40 │   }
+  41 └ }
+────────────────────────────────────────
+
+
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
