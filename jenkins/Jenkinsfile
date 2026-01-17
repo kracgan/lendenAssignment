@@ -12,7 +12,7 @@ pipeline {
         stage('Terraform Security Scan') {
             steps {
                 sh '''
-                  trivy config terraform --severity HIGH,CRITICAL terraform/
+                  trivy config --severity HIGH,CRITICAL terraform/
                 '''
             }
         }
