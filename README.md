@@ -158,34 +158,34 @@ Include screenshots of:
 - Initial failing Jenkins pipeline
 - Trivy security vulnerability report
 - Final successful Jenkins pipeline
-- Application running on cloud public IP
+- Application running on cloud public IP || Link: https://lendenassignment.onrender.com/
 
 ## Jenkins Pipeline – Successful Run
 
-![Jenkins Pipeline Success](screenshots/jenkins-success/1.png)
-![Jenkins Pipeline Success](screenshots/jenkins-success/2.png)
-![Jenkins Pipeline Success](screenshots/jenkins-success/3.png)
-![Jenkins Pipeline Success](screenshots/jenkins-success/4.png)
-![Jenkins Pipeline Success](screenshots/jenkins-success/5.png)
+![Jenkins Pipeline Success](work-proofs/screenshots/jenkins-success/1.png)
+![Jenkins Pipeline Success](work-proofs/screenshots/jenkins-success/2.png)
+![Jenkins Pipeline Success](work-proofs/screenshots/jenkins-success/3.png)
+![Jenkins Pipeline Success](work-proofs/screenshots/jenkins-success/4.png)
+![Jenkins Pipeline Success](work-proofs/screenshots/jenkins-success/5.png)
 
 ## Trivy Security Scan – Initial Failure
 
-![Trivy Scan Failure](screenshots/trivy-scan-fail/1.png)
-![Trivy Scan Failure](screenshots/trivy-scan-fail/2.png)
-![Trivy Scan Failure](screenshots/trivy-scan-fail/3.png)
-![Trivy Scan Failure](screenshots/trivy-scan-fail/4.png)
-![Trivy Scan Failure](screenshots/trivy-scan-fail/5.png)
-![Trivy Scan Failure](screenshots/trivy-scan-fail/6.png)
+![Trivy Scan Failure](work-proofs/screenshots/trivy-scan-fail/1.png)
+![Trivy Scan Failure](work-proofs/screenshots/trivy-scan-fail/2.png)
+![Trivy Scan Failure](work-proofs/screenshots/trivy-scan-fail/3.png)
+![Trivy Scan Failure](work-proofs/screenshots/trivy-scan-fail/4.png)
+![Trivy Scan Failure](work-proofs/screenshots/trivy-scan-fail/5.png)
+![Trivy Scan Failure](work-proofs/screenshots/trivy-scan-fail/6.png)
 
 ## Trivy Security Scan – After Remediation
 
-![Trivy Scan Pass](screenshots/trivy-scan-pass/1.png)
-![Trivy Scan Pass](screenshots/trivy-scan-pass/2.png)
-![Trivy Scan Pass](screenshots/trivy-scan-pass/3.png)
+![Trivy Scan Pass](work-proofs/screenshots/trivy-scan-pass/1.png)
+![Trivy Scan Pass](work-proofs/screenshots/trivy-scan-pass/2.png)
+![Trivy Scan Pass](work-proofs/screenshots/trivy-scan-pass/3.png)
 
 ## Application Running on Cloud
 
-![App Running](screenshots/app-running.png)
+![App Running](work-proofs/screenshots/app-running/image.png)
 
 
 ---
