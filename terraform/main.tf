@@ -2,16 +2,16 @@ provider "aws" {
   region = var.region
 }
 
-resource "aws_security_group" "insecure_sg" {
-  name        = "insecure-sg"
-  description = "Security group with intentional vulnerability"
+resource "aws_security_group" "secure_sg" {
+  name        = "secure-sg"
+  description = "Hardened security group after DevSecOps remediation"
 
   ingress {
-    description = "SSH open to world (INTENTIONAL)"
+    description = "Restricted SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/16"]   # ❌ intentional vulnerability -> now Corrected ✔️
+    cidr_blocks = ["10.0.0.0/16"]
   }
 
   ingress {
@@ -19,14 +19,14 @@ resource "aws_security_group" "insecure_sg" {
     from_port   = 3000
     to_port     = 3000
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   }
 
   egress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   }
 }
 
