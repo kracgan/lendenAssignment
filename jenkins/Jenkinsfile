@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Terraform Security Scan') {
+            steps {
+                sh '''
+                  trivy config terraform --severity HIGH,CRITICAL terraform/
+                '''
+            }
+        }
+
+        stage('Terraform Init & Plan') {
+            steps {
+                sh '''
+                  cd terraform
+                  terraform init
+                  terraform plan || true
+                '''
+            }
+        }
+    }
+}
