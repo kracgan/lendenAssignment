@@ -31,7 +31,7 @@ resource "aws_security_group" "secure_sg" {
 }
 
 resource "aws_instance" "node_app" {
-  ami                    = "ami-0f5ee92e2d63afc18"
+  ami                    = "ami-0ea2ed4258c13b100"
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.secure_sg.id]
 
@@ -45,5 +45,14 @@ resource "aws_instance" "node_app" {
 
   tags = {
     Name = "NodeApp-DevSecOps"
+  }
+}
+
+resource "aws_eip" "node_app_eip" {
+  instance = aws_instance.node_app.id
+  domain   = "vpc"
+
+  tags = {
+    Name = "node-app-eip"
   }
 }

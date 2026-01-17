@@ -10,6 +10,9 @@ yarn-error.log
 
 # Terraform
 terraform/.terraform/
+terraform/lendenass-key.pem
+terraform/null
+terraform/terraform.tfvars
 *.tfstate
 *.tfstate.*
 .crash.log
@@ -38,3 +41,9 @@ coverage/
 .cache/
 temp/
 tmp/
+
+aws/
+awscliv2.zip
+
+lenden-key.pem
+        
